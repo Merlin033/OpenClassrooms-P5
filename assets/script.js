@@ -17,8 +17,6 @@ const slides = [
 	},
 ];
 
-const arrowLeft = document.querySelector(".arrow_left");
-const arrowRight = document.querySelector(".arrow_right");
 const dots = document.querySelector(".dots");
 let currentSlideIndex = 0;
 
@@ -32,11 +30,8 @@ for (let i = 0; i < slides.length; i++) {
 	}
 }
 
+/*
 arrowRight.addEventListener("click", () => {
-	currentSlideIndex++;
-	if (currentSlideIndex >= slides.length) {
-		currentSlideIndex = 0;
-	}
 	const slideImage = document.querySelector(".banner-img");
 	const slideText = document.querySelector("#banner p");
 	slideImage.src = "./assets/images/slideshow/" + slides[currentSlideIndex].image;
@@ -47,17 +42,32 @@ arrowRight.addEventListener("click", () => {
 	newDot.classList.add("dot_selected");
 });
 
-arrowLeft.addEventListener("click", () => {
-	currentSlideIndex--;
-	if (currentSlideIndex < 0) {
-		currentSlideIndex = slides.length - 1;
-	}
-	const slideImage = document.querySelector(".banner-img");
-	const slideText = document.querySelector("#banner p");
-	slideImage.src = "./assets/images/slideshow/" + slides[currentSlideIndex].image;
-	slideText.innerHTML = slides[currentSlideIndex].tagLine;
-	const currentDot = document.querySelector(".dot_selected");
-	currentDot.classList.remove("dot_selected");
-	const newDot = document.querySelectorAll(".dot")[currentSlideIndex];
-	newDot.classList.add("dot_selected");
-});
+arrowLeft.addEventListener("click", () => {});*/
+
+const arrows = document.querySelectorAll(".arrow");
+for (const arrow of arrows) {
+	arrow.addEventListener("click", (e) => {
+		clickedArrow = e.target;
+		selectedSide = clickedArrow.dataset.side;
+		console.log(selectedSide);
+		if (selectedSide == "left") {
+			currentSlideIndex--;
+			if (currentSlideIndex < 0) {
+				currentSlideIndex = slides.length - 1;
+			}
+		} else {
+			currentSlideIndex++;
+			if (currentSlideIndex >= slides.length) {
+				currentSlideIndex = 0;
+			}
+		}
+		const slideImage = document.querySelector(".banner-img");
+		const slideText = document.querySelector("#banner p");
+		slideImage.src = "./assets/images/slideshow/" + slides[currentSlideIndex].image;
+		slideText.innerHTML = slides[currentSlideIndex].tagLine;
+		const currentDot = document.querySelector(".dot_selected");
+		currentDot.classList.remove("dot_selected");
+		const newDot = document.querySelectorAll(".dot")[currentSlideIndex];
+		newDot.classList.add("dot_selected");
+	});
+}
